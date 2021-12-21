@@ -31,7 +31,8 @@ class AuthService {
           displayToastMessage("Welcome back Mr. " + snap.value["name"]);
           pd.close();
           Navigator.pushNamedAndRemoveUntil(
-              context, MainScreen.idScreen, (route) => false);
+              context, MainScreen.idScreen, (route) => false,
+              arguments: {'extractedUserName': snap.value["name"]});
         }
       });
       return user;

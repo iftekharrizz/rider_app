@@ -50,10 +50,23 @@ class _MainScreenState extends State<MainScreen> {
     zoom: 14.4746,
   );
 
+  String capitalize(String string) {
+    if (string.isEmpty) {
+      return string;
+    }
+
+    return string[0].toUpperCase() + string.substring(1);
+  }
+
   AuthService _auth = AuthService();
+
 
   @override
   Widget build(BuildContext context) {
+
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    var userName = arguments['extractedUserName'];
+
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -139,7 +152,7 @@ class _MainScreenState extends State<MainScreen> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: GoogleMap(
-              padding: EdgeInsets.only(bottom: 270),
+              padding: EdgeInsets.only(right: 10,left: 10,bottom: MediaQuery.of(context).size.height - 550),
               initialCameraPosition: _kGooglePlex,
               mapType: MapType.normal,
               myLocationButtonEnabled: true,
@@ -156,7 +169,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
 
           //Hamburger drawerbutton
-          Positioned(
+          /*Positioned(
             top: 45.0,
             left: 22.0,
             child: GestureDetector(
@@ -184,7 +197,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             ),
-          ),
+          ),*/
 
           //search menu
           Positioned(
@@ -216,7 +229,7 @@ class _MainScreenState extends State<MainScreen> {
                       height: 6.0,
                     ),
                     Text(
-                      "Hi there,",
+                      "Hi ${capitalize(userName)},",
                       style: TextStyle(fontSize: 12.0),
                     ),
                     Text(

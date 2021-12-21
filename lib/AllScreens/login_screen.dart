@@ -16,11 +16,14 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(8.0),
+      body: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(
                 height: 35,
@@ -39,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   children: [
                     DecoTextFormField(
