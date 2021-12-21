@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "510620727120",
+    "firebase_url": "https://lets-go-28429-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "lets-go-28429",
+    "storage_bucket": "lets-go-28429.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510620727120:android:a36bbb66e02365b5a19e55",
+        "android_client_info": {
+          "package_name": "com.iffyrizz.rider_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510620727120-h92bj7qnj95fv2amrng1778mgudlmthh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcY53HirI3hcH8ZwwVGbiLs2HYo5GHEp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510620727120-h92bj7qnj95fv2amrng1778mgudlmthh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
