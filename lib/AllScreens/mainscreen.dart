@@ -50,12 +50,10 @@ class _MainScreenState extends State<MainScreen> {
     zoom: 14.4746,
   );
 
-  final AuthService _auth = AuthService();
+  AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    final updateLocation = Provider.of<AppData>(context).pickUpLocation!.placeName;
-
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -259,7 +257,7 @@ class _MainScreenState extends State<MainScreen> {
                               SizedBox(
                                 width: 10.0,
                               ),
-                              Text(updateLocation!.isNotEmpty ? updateLocation.toString() : "search drop off" ),
+                              Text("Search Drop Off"),
                             ],
                           ),
                         ),
