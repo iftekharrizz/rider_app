@@ -15,26 +15,19 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height,
+      body: SingleChildScrollView(
+        //reverse: true,
+        child: SizedBox(
+          height: height,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 35,
-              ),
               Image(
                 image: AssetImage("images/logo.png"),
-                width: MediaQuery.of(context).size.width,
-                height: 250.0,
-              ),
-              SizedBox(
-                height: 1.0,
+                height: height / 4,
               ),
               Text(
                 "Login as a Rider",
@@ -60,18 +53,17 @@ class LoginScreen extends StatelessWidget {
                       hintString: "Enter your password here..",
                     ),
                     SizedBox(
-                      height: 8.0,
+                      height: 16.0,
                     ),
                     customElevatedButton(
                         buttonName: "Login",
                         onTap: () {
                           if (!email.text.contains("@")) {
                             displayToastMessage("Email address is not valid.");
-                          }
-                          else if(password.text.length < 6 ){
-                            displayToastMessage("Password must be atleast 6 characters.");
-                          }
-                         else{
+                          } else if (password.text.length < 6) {
+                            displayToastMessage(
+                                "Password must be atleast 6 characters.");
+                          } else {
                             _auth.logInUser(context,
                                 email: email.text, password: password.text);
                           }
@@ -82,10 +74,8 @@ class LoginScreen extends StatelessWidget {
                         Text("Do not have an account?"),
                         TextButton(
                             onPressed: () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  RegistrationScreen.idScreen,
-                                  (route) => false);
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  RegistrationScreen.idScreen, (route) => false);
                             },
                             child: Text("Register here."))
                       ],

@@ -23,7 +23,7 @@ class DecoTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelString,
         labelStyle: TextStyle(
-          fontSize: 14.0,
+          fontSize: 12.0,
         ),
         hintText: hintString,
         hintStyle: TextStyle(

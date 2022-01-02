@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:rider_app/AllScreens/search_screen.dart';
 import 'package:rider_app/ComponentsAndConstants/divider.dart';
 import 'package:rider_app/DataHandler/app_data.dart';
+import 'package:rider_app/DataHandler/user_info.dart';
 import 'package:rider_app/HttpAssistants/assistant_methods.dart';
 import 'package:rider_app/HttpAssistants/request_assistants.dart';
 import 'package:rider_app/services/auth.dart';
@@ -60,20 +61,23 @@ class _MainScreenState extends State<MainScreen> {
 
   AuthService _auth = AuthService();
 
-
   @override
   Widget build(BuildContext context) {
-
     final arguments = ModalRoute.of(context)!.settings.arguments as Map;
     var userName = arguments['extractedUserName'];
+
+    //String? nameUser = AppData().userName;
+
+    //print("===========>>>> nameUser = " + nameUser!);
 
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         title: Text(
-          "Main Screen",
+          "Lets go!",
           style: TextStyle(fontFamily: "Brand-Bold"),
         ),
+        centerTitle: true,
       ),
       drawer: Container(
         color: Colors.white,
@@ -152,7 +156,10 @@ class _MainScreenState extends State<MainScreen> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: GoogleMap(
-              padding: EdgeInsets.only(right: 10,left: 10,bottom: MediaQuery.of(context).size.height - 550),
+              padding: EdgeInsets.only(
+                  right: 10,
+                  left: 10,
+                  bottom: MediaQuery.of(context).size.height - 550),
               initialCameraPosition: _kGooglePlex,
               mapType: MapType.normal,
               myLocationButtonEnabled: true,
@@ -229,11 +236,11 @@ class _MainScreenState extends State<MainScreen> {
                       height: 6.0,
                     ),
                     Text(
-                      "Hi ${capitalize(userName)},",
+                        "Hi ${context.read<AppData>().userName},",
                       style: TextStyle(fontSize: 12.0),
                     ),
                     Text(
-                      "Where to?",
+                      "Where to",
                       style:
                           TextStyle(fontSize: 20.0, fontFamily: "Brand-Bold"),
                     ),
