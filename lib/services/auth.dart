@@ -6,7 +6,7 @@ import 'package:rider_app/AllScreens/login_screen.dart';
 import 'package:rider_app/AllScreens/mainscreen.dart';
 import 'package:rider_app/ComponentsAndConstants/components_constants.dart';
 import 'package:rider_app/DataHandler/app_data.dart';
-import 'package:rider_app/DataHandler/user_info.dart';
+
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'database.dart';
 
@@ -29,7 +29,8 @@ class AuthService {
     if (user != null) {
       userRef.child(user.uid).once().then((DataSnapshot snap) {
         if (snap.value != null) {
-          Provider.of<AppData>(context, listen: false).setName(snap.value["name"]);
+          //Provider.of<AppData>(context, listen: false).setName(snap.value["name"]);
+          context.read<AppData>().setName(snap.value["name"]);
           displayToastMessage("Welcome back Mr. " + snap.value["name"]);
           pd.close();
           Navigator.pushNamedAndRemoveUntil(

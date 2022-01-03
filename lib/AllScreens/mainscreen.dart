@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,11 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:rider_app/AllScreens/search_screen.dart';
 import 'package:rider_app/ComponentsAndConstants/divider.dart';
 import 'package:rider_app/DataHandler/app_data.dart';
-import 'package:rider_app/DataHandler/user_info.dart';
 import 'package:rider_app/HttpAssistants/assistant_methods.dart';
-import 'package:rider_app/HttpAssistants/request_assistants.dart';
 import 'package:rider_app/services/auth.dart';
-import 'package:rider_app/services/config_maps.dart';
+
 
 class MainScreen extends StatefulWidget {
   static const String idScreen = "mainscreen";
@@ -32,10 +28,11 @@ class _MainScreenState extends State<MainScreen> {
   var geoLocator = Geolocator();
   double gMapBottomPadding = 0.0;
 
-  void locatePosition() async {
+  void locatePosition(BuildContext context) async {
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.best);
     currentPosition = position;
+
     LatLng latLng = LatLng(position.latitude, position.longitude);
 
     CameraPosition cameraPosition = CameraPosition(target: latLng, zoom: 14);
@@ -43,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     String? address = await AssistantMethods.searchCoordinatesAddress(
         currentPosition, context);
-    print("This is your address:: " + address!);
+    //print("This is your address:: " + address!);
   }
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -59,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
     return string[0].toUpperCase() + string.substring(1);
   }
 
-  AuthService _auth = AuthService();
+  //AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -167,45 +164,14 @@ class _MainScreenState extends State<MainScreen> {
                 _controllerGoogleMap.complete(controller);
                 newGoogleMapController = controller;
 
-                locatePosition();
+                locatePosition(context);
+                //context.watch<AppData>().updatePickUpLocationAddress(currentPosition)
               },
               myLocationEnabled: true,
               zoomGesturesEnabled: true,
               zoomControlsEnabled: true,
             ),
           ),
-
-          //Hamburger drawerbutton
-          /*Positioned(
-            top: 45.0,
-            left: 22.0,
-            child: GestureDetector(
-              onTap: () {
-                scaffoldKey.currentState!.openDrawer();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(22.0),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black54,
-                          blurRadius: 6.0,
-                          spreadRadius: .5,
-                          offset: Offset(
-                            0.7,
-                            0.7,
-                          )),
-                    ]),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.menu),
-                  radius: 20.0,
-                ),
-              ),
-            ),
-          ),*/
-
           //search menu
           Positioned(
             left: 0.0,
@@ -236,7 +202,7 @@ class _MainScreenState extends State<MainScreen> {
                       height: 6.0,
                     ),
                     Text(
-                        "Hi ${context.read<AppData>().userName},",
+                        "Hi ${context.watch<AppData>().userName},",
                       style: TextStyle(fontSize: 12.0),
                     ),
                     Text(

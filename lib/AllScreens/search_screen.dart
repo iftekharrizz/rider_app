@@ -7,6 +7,7 @@ import 'package:rider_app/ComponentsAndConstants/components_constants.dart';
 import 'package:rider_app/ComponentsAndConstants/divider.dart';
 import 'package:rider_app/DataHandler/app_data.dart';
 import 'package:rider_app/HttpAssistants/request_assistants.dart';
+import 'package:rider_app/Models/address.dart';
 import 'package:rider_app/Models/place_prediction.dart';
 import 'package:rider_app/services/config_maps.dart';
 
@@ -22,9 +23,8 @@ class _SearchScreenState extends State<SearchScreen> {
   List<PlacePredictions> predictionList = [];
   @override
   Widget build(BuildContext context) {
-    String placeName =
-        Provider.of<AppData>(context).pickUpLocation!.placeName ?? "";
-    pickUpTextController.text = placeName;
+    String? pickLocation = context.watch<AppData>().pickUpLocation!.placeName;
+    pickUpTextController.text = pickLocation!;
 
     return Scaffold(
       body: Column(
@@ -125,7 +125,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               controller: dropOffTextController,
                               onChanged: (val) {
                                 setState(() {
-                                  val.length > 0 ?
+                                  val.length > 2 ?
                                   findPlace(val):predictionList.clear();
                                 });
                               },
@@ -147,42 +147,51 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           predictionList.isNotEmpty
-              ? Container(
-                  height: 143,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      physics: AlwaysScrollableScrollPhysics(),
-                      child: ListView.separated(
-                        padding: EdgeInsets.all(0.0),
-                        itemBuilder: (context, index) {
-                          return PredictionTile(
-                            placePredictions: predictionList[index],
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) =>
-                            DividerWidget(),
-                        itemCount: predictionList.length,
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
+              ? Expanded(
+                child: Container(
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        child: ListView.separated(
+                          padding: EdgeInsets.all(0.0),
+                          itemBuilder: (context, index) {
+                            return PredictionTile(
+                              placePredictions: predictionList[index],
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              DividerWidget(),
+                          itemCount: predictionList.length,
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                        ),
                       ),
                     ),
                   ),
-                )
-              : Container()
+              )
+              : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 200),
+                    child: Center(child: Text("Search your destination")),
+                  ),
+                ],
+              )
         ],
       ),
     );
   }
 
   void findPlace(String placeName) async {
-    if (placeName.length > 1) {
+    if (placeName.length > 2) {
       String autoCompleteUrl =
-          "https://api.tomtom.com/search/2/geocode/$placeName.json?limit=5&countrySet=CA&key=$autoCompSearchKey";
+          "https://api.geoapify.com/v1/geocode/autocomplete?text=$placeName&limit=5&filter=countrycode:bd&format=json&apiKey=$geoApifyKey";
       var res = await RequestAssistants.getRequest(autoCompleteUrl);
-      if (res.hashCode == 200) {
+      if (res == "failed") {
         print("nothing found");
       } else {
         var predictions = res["results"];

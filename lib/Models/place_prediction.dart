@@ -8,9 +8,9 @@ class PlacePredictions{
   PlacePredictions({this.street_name,this.local_name,this.country_subDivisionName});
 
   PlacePredictions.fromJson(Map<String, dynamic>json){
-    street_name = json["address"]["streetName"];
-    local_name = json["address"]["localName"];
-    country_subDivisionName = json["address"]["countrySubdivisionName"];
+    street_name = json["name"];
+    local_name = json["street"];
+    country_subDivisionName = json["city"];
   }
 
 
