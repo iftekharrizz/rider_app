@@ -69,13 +69,6 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        title: Text(
-          "Lets go!",
-          style: TextStyle(fontFamily: "Brand-Bold"),
-        ),
-        centerTitle: true,
-      ),
       drawer: Container(
         color: Colors.white,
         width: 240.0,
@@ -154,6 +147,7 @@ class _MainScreenState extends State<MainScreen> {
             width: MediaQuery.of(context).size.width,
             child: GoogleMap(
               padding: EdgeInsets.only(
+                top: 50,
                   right: 10,
                   left: 10,
                   bottom: MediaQuery.of(context).size.height - 550),
